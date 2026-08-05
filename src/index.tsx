@@ -94,7 +94,7 @@ const App = () => {
   const currentVideo = videosList[currentVideoIndex];
 
   return (
-    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-bg-gray">
+    <div className="relative flex h-screen h-dvh w-screen items-center justify-center overflow-hidden bg-bg-gray">
       <div className="relative h-full w-full md:max-w-[430px]">
         <div className="relative h-full w-full overflow-hidden">
           <VideoSlider

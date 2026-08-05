@@ -67,10 +67,18 @@ export function useVideoFeed({
       updateDrag(y - startY.current);
     };
 
+    const cancelPendingDragUpdate = () => {
+      if (frame.current === null) return;
+
+      cancelAnimationFrame(frame.current);
+      frame.current = null;
+    };
+
     const end = (y: number) => {
       if (!dragging.current) return;
 
       dragging.current = false;
+      cancelPendingDragUpdate();
 
       const delta = y - startY.current;
       const velocity = Math.abs(delta) / (performance.now() - startTime.current || 1);
@@ -107,6 +115,7 @@ export function useVideoFeed({
       if (!dragging.current) return;
 
       dragging.current = false;
+      cancelPendingDragUpdate();
       lockAnimation();
       updateDrag(0);
       onSnapBack();

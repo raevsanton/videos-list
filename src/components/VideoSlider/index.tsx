@@ -62,7 +62,8 @@ const VideoSlider = ({
 
   const handleCommit = useCallback(
     (dir: "up" | "down") => {
-      const target = dir === "up" ? -window.innerHeight : window.innerHeight;
+      const feedHeight = feedRef.current?.clientHeight ?? window.innerHeight;
+      const target = dir === "up" ? -feedHeight : feedHeight;
 
       clearTransitionTimer();
       setSnapTransition(`transform ${SNAP_MS}ms cubic-bezier(0.25,1,0.5,1)`);
@@ -222,7 +223,7 @@ const VideoSlider = ({
           key={index}
           className="absolute inset-0 will-change-transform"
           style={{
-            transform: `translateY(calc(${translate}vh + var(--feed-drag-offset, 0px)))`,
+            transform: `translateY(calc(${translate}% + var(--feed-drag-offset, 0px)))`,
             transition: snapTransition,
           }}
         >

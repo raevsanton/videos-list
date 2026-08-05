@@ -94,7 +94,7 @@ const App = () => {
   const currentVideo = videosList[currentVideoIndex];
 
   return (
-    <div className="relative flex h-screen h-dvh w-screen items-center justify-center overflow-hidden bg-bg-gray">
+    <div className="relative flex h-screen h-svh w-screen items-center justify-center overflow-hidden bg-bg-gray">
       <div className="relative h-full w-full md:max-w-[430px]">
         <div className="relative h-full w-full overflow-hidden">
           <VideoSlider
@@ -105,7 +105,7 @@ const App = () => {
             currentVideoIndex={currentVideoIndex}
           />
 
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/40 to-transparent p-5 pt-20 text-white">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/40 to-transparent p-5 pt-20 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-white">
             <div className="mb-1 flex items-center gap-2">
               <span className="font-bold text-lg text-white tracking-wide drop-shadow-md">
                 @{currentVideo.name}

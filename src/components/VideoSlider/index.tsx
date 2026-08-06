@@ -26,7 +26,7 @@ const VideoSlider = ({
   const total = videosList.length;
 
   const [snapTransition, setSnapTransition] = useState("");
-  const [readyVideoIndexes, setReadyVideoIndexes] = useState<Set<number>>(() => new Set());
+  const [playingVideoIndexes, setPlayingVideoIndexes] = useState<Set<number>>(() => new Set());
   const feedRef = useRef<HTMLDivElement>(null);
   const transitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -34,8 +34,8 @@ const VideoSlider = ({
     feedRef.current?.style.setProperty("--feed-drag-offset", `${offset}px`);
   }, []);
 
-  const markVideoReady = useCallback((index: number) => {
-    setReadyVideoIndexes((previous) => {
+  const markVideoPlaying = useCallback((index: number) => {
+    setPlayingVideoIndexes((previous) => {
       if (previous.has(index)) return previous;
 
       return new Set(previous).add(index);
@@ -233,10 +233,9 @@ const VideoSlider = ({
               muted
               loop
               playsInline
-              preload={translate === -100 ? "metadata" : "auto"}
-              poster={readyVideoIndexes.has(index) ? undefined : video.poster}
+              preload="auto"
               aria-label={video.name}
-              onLoadedData={() => markVideoReady(index)}
+              onPlaying={() => markVideoPlaying(index)}
               ref={(el) => {
                 if (el) {
                   videoRefs.current.set(index, el);
@@ -245,6 +244,12 @@ const VideoSlider = ({
                 }
               }}
               className="absolute inset-0 h-full w-full object-cover"
+            />
+            <img
+              src={video.poster}
+              alt=""
+              draggable={false}
+              className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-150 ${playingVideoIndexes.has(index) ? "opacity-0" : "opacity-100"}`}
             />
           </div>
         </div>
